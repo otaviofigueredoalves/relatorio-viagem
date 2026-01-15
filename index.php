@@ -1,0 +1,102 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+require_once 'GeradorRelatorio.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $dados = [
+        'cidade' => $_POST['cidade'],
+        'data_i' => $_POST['data_i'],
+        'data_f' => $_POST['data_f'],
+        'historico' => $_POST['historico'],
+        'motorista' => $_POST['motorista'],
+        'veiculo' => $_POST['veiculo'],
+        'saida' => $_POST['saida'],
+        'chegada' => $_POST['chegada']
+    ];
+
+    $gerador = new GeradorRelatorio();
+    $pdfBinario = $gerador->renderizar($dados);
+
+    // LIMPA qualquer saída anterior para não corromper o PDF
+    ob_clean();
+
+    // CABEÇALHOS para o navegador abrir o PDF
+    header('Content-Type: application/pdf');
+    header('Content-Disposition: inline; filename="relatorio_viagem.pdf"');
+    header('Cache-Control: private, max-age=0, must-revalidate');
+    header('Pragma: public');
+
+    // EXIBE o conteúdo do PDF
+    echo $pdfBinario;
+    exit; // Importante para não carregar o resto do HTML abaixo
+
+}
+
+?>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Viagem</title>
+    <link rel="stylesheet" href="/src/css/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Preencher Relatório de Viagem</h1>
+    <p>Os dados abaixo serão sobrepostos ao PDF oficial.</p>
+
+    <form action="" method="POST">
+        <div class="form-group">
+            <label for="motorista">Motorista: </label>
+            <input type="text" name="motorista" id="motorista" >
+        </div>
+        
+        <div class="form-group">
+            <label for="cidade">Cidade: </label>
+            <input type="text" name="cidade" id="cidade" >
+        </div>
+
+        <div class="form-group">
+            <label for="veiculo">Veiculo: </label>
+            <input type="text" name="veiculo" id="veiculo" >
+        </div>
+
+        <div class="form-group">
+            <label for="data_i">Data inicial: </label>
+            <input type="date" name="data_i" id="data_i" >
+        </div>
+        
+        <div class="form-group">
+            <label for="data_f">Data final: </label>
+            <input type="date" name="data_f" id="data_f" >
+        </div>
+
+        <div class="form-group">
+            <label for="historico">Historico </label>
+            <textarea type="text" rows='3' name="historico" id="historico" ></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="saida">Saída: </label>
+            <input type="text" name="saida" id="saida" >
+        </div>
+
+        <div class="form-group">
+            <label for="chegada">Chegada: </label>
+            <input type="text" name="chegada" id="chegada" >
+        </div>
+        
+
+        
+
+        <button type="submit" class="btn-gerar">Gerar e Enviar PDF</button>
+    </form>
+  
+</div>
+
+</body>
+</html>

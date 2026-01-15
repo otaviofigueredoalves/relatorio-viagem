@@ -1,0 +1,18 @@
+{
+    "name": "app/relatorio",
+    "description": "programa de relatorio de viagem para motoristas de ibiapina",
+    "autoload": {
+        "psr-4": {
+            "App\\Relatorio\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "otaviodev",
+            "email": "117609558+otaviofigueredoalves@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "dompdf/dompdf": "^3.1"
+    }
+}
