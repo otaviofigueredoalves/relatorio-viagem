@@ -1,0 +1,63 @@
+#cidade {
+    top: 80.5mm;
+    left: 63mm;
+    background-color: #fff;
+    width: 47mm
+}
+
+#data_i {
+    text-align: center;
+    top: 85mm;
+    left: 30mm;
+    background-color: #fff;
+    width: 24.5mm;
+    font-size: 15px;
+}
+
+#data_f {
+    text-align: center;
+    top: 85mm;
+    left: 57.5mm;
+    background-color: #fff;
+    width: 24.5mm;
+    font-size: 15px;
+}
+
+#historico {
+    top: 140mm;
+    left: 25.5mm;
+    width: 130mm;
+    line-height: 5.7mm;
+    word-wrap: break-word;
+}
+
+#motorista {
+    top: 62.5mm;
+    left: 85mm;
+}
+
+#nome_motorista {
+    top: 206.5mm;
+    left: 45mm;
+}
+
+#cpf {
+    top: 66.5mm;
+    left: 26.5mm;
+    width: 35mm !important;
+}
+
+#veiculo {
+    top: 213mm;
+    left: 51mm;
+}
+
+#saida {
+    top: 220mm;
+    left: 38mm;
+}
+
+#chegada {
+    top: 226.5mm;
+    left: 43mm;
+}

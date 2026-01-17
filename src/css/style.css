@@ -32,8 +32,23 @@ p {
     margin-bottom: 15px;
 }
 
+#extra {                                
+    background-color: rgb(175, 157, 136);
+    color: #fff;
+    font-weight: bold;
+    width: auto;
+}
+#extra:active,
+#extra:focus{
+    background-color: #c79029;
+}
+
 .form-group {
     margin-bottom: 15px;
+}
+
+#label-extra{
+    display: inline;
 }
 
 label {
