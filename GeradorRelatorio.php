@@ -10,17 +10,83 @@ class GeradorRelatorio {
     public function __construct() {
         $options = new Options();
         $options->set('isRemoteEnabled', true);
-        // IMPORTANTE: O chroot deve apontar para a pasta pai se o template estiver numa subpasta
         $options->set('chroot', realpath(__DIR__)); 
 
         $this->dompdf = new Dompdf($options);
     }
 
     public function renderizar($dados) {
-        // Usamos o Buffer de saída para não misturar HTML com PHP
         ob_start();
         ?>
         <style>
+            #cidade {
+                top: 87.5mm;
+                left: 73mm;
+                background-color: #fff;
+                width: 47mm
+            }
+
+            #data_i {
+                text-align: center;
+                top: 92mm;
+                left: 35mm;
+                background-color: #fff;
+                width: 27mm;
+                font-size: 15px;
+            }
+
+            #data_f {
+                text-align: center;
+                top: 92mm;
+                left: 65.5mm;
+                background-color: #fff;
+                width: 27mm;
+                font-size: 15px;
+            }
+
+            #historico {
+                top: 130mm;
+                left: 28.5mm;
+                width: 148mm;
+                line-height: 5.8mm;
+                word-wrap: break-word;
+            }
+
+            #motorista {
+                top: 68mm;
+                left: 97mm;
+            
+            }
+            #nome_motorista{
+                top: 202mm;
+                left: 50mm;
+            }
+            #cpf {
+                top: 73mm;
+                left: 30mm;
+            }
+
+            #veiculo {
+                top: 210mm;
+                left: 58mm;
+            }
+
+            #saida {
+                top: 217mm;
+                left: 43mm;
+            }
+
+            #chegada {
+                top: 224.5mm;
+                left: 49mm;
+            }
+
+            <?php 
+            if(!empty($dados['extra'])){
+                echo "@import url(/src/css/extra.css)";
+            }
+
+            ?>
             @page { margin: 0; }
             body {
                 margin: 0;
@@ -37,41 +103,51 @@ class GeradorRelatorio {
                 height: 100%;
                 z-index: -1;
             }
-            .campo {
-                position: absolute;
-                color: #000080; /* Azul caneta */
-                font-size: 14px;
-                font-weight: bold;
-            }
-            /* Aqui você mapeia cada campo do seu formulário físico */
-            #cidade { top: 106mm; left: 137mm; background-color: #fff; width: 47mm}
-            #data_i { top: 116mm; left: 15mm; background-color: #fff; width: 22mm}
-            #data_f { top: 116mm; left: 42mm; background-color: #fff; width: 22mm}
-            #historico { top: 168mm; left: 17mm; width: 173mm; line-height: 5.6mm; }
-            #motorista { top: 238mm; left: 36mm; }
-            #veiculo { top: 245mm; left: 45mm; }
-            #saida { top: 253mm; left: 30mm; }
-            #chegada { top: 260mm; left: 35mm; }
+            
 
             .campo {
                 position: absolute;
                 color: #000;
                 font-size: 14px;
                 font-weight: bold;
-                /* border: 0.1mm solid rgba(255, 0, 0, 0.5);  */
-                /* background-color: rgba(255, 255, 0, 0.1); */
+                /* border: 1px solid red; */
+            }
+
+            #cpf{
+                /* font-size: 15px; */
+                background: #fff;
+                width: 40mm
+            }
+
+            #cidade {
+                background: none;
             }
 
             
         </style>
+        
+     
+        <img src="<?php
+        if(!empty($dados['extra'])){
+            echo realpath(__DIR__ . '/template/RELATORIO-VIAGEM-EXTRA.jpg'); 
+        } else {
+            echo realpath(__DIR__ . '/template/RELATORIO-VIAGEM.jpg'); 
+        }
 
-       <img src="<?php echo realpath(__DIR__ . '/template/relatorio_osvaldo.jpg'); ?>" class="background">
+        ?>" class="background">
 
-        <div id="cidade" class="campo"><?php echo $dados['cidade']; ?></div>
+        <div id="cidade" class="campo"><?php echo $dados['cidade'] . '-CE'; ?></div>
         <div id="data_i" class="campo"><?php echo date('d/m/Y', strtotime($dados['data_i'])) ; ?></div>
         <div id="data_f" class="campo"><?php echo date('d/m/Y', strtotime($dados['data_f'])); ?></div>
         <div id="historico" class="campo"><?php echo nl2br(htmlspecialchars($dados['historico'])); ?></div>
-        <div id="motorista" class="campo"><?php echo $dados['motorista']; ?></div>
+        <div id="motorista" class="campo"><?php echo ucwords($dados['motorista']); ?></div>
+        <div id="nome_motorista" class="campo"><?php echo ucwords($dados['motorista']); ?></div>
+        <div id="cpf" class="campo"><?php 
+
+        echo $dados['cpf'][0] .  $dados['cpf'][1] .  $dados['cpf'][2] . '.' .  $dados['cpf'][3] .  $dados['cpf'][4] .  $dados['cpf'][5] . '.' .  $dados['cpf'][6] .  $dados['cpf'][7] .  $dados['cpf'][8] . '-' .  $dados['cpf'][9] .  $dados['cpf'][10]; 
+        
+        
+        ?></div>
         <div id="veiculo" class="campo"><?php echo $dados['veiculo']; ?></div>
         <div id="saida" class="campo"><?php echo $dados['saida']; ?></div>
         <div id="chegada" class="campo"><?php echo $dados['chegada']; ?></div>
@@ -83,6 +159,6 @@ class GeradorRelatorio {
         $this->dompdf->setPaper('A4', 'portrait');
         $this->dompdf->render();
 
-        return $this->dompdf->output(); // Retorna o binário do PDF
+        return $this->dompdf->output();
     }
 }
