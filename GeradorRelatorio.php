@@ -82,8 +82,10 @@ class GeradorRelatorio {
             }
 
             <?php 
-            if(!empty($dados['extra'])){
-                echo "@import url(/src/css/extra.css)";
+            $caminhoExtra = $_SERVER['DOCUMENT_ROOT'] . '/src/css/extra.css';
+
+            if(!empty($dados['extra']) && file_exists($caminhoExtra)){
+                echo file_get_contents($caminhoExtra);
             }
 
             ?>

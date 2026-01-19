@@ -1,4 +1,9 @@
 <?php
+session_start();
+if(!empty($_SESSION['cpf']) && !empty($_SESSION['nome_completo'])){
+    $cpf_value = $_SESSION['cpf'];
+    $nome = $_SESSION['nome_completo'];
+}
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
@@ -18,6 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'extra' => $_POST['extra']
     ];
 
+    $_SESSION['cpf'] = $_POST['cpf'] ?? null;
+    $_SESSION['nome_completo'] = $_POST['motorista'] ?? null;
+
+
+    echo $cpf_value;
+    echo $nome;
+
 
     $gerador = new GeradorRelatorio();
     $pdfBinario = $gerador->renderizar($dados);
@@ -25,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ob_clean();
 
     header('Content-Type: application/pdf');
-    header('Content-Disposition: inline; filename="relatorio_viagem.pdf"');
+    header('Content-Disposition: attachment; filename="relatorio_viagem.pdf"');
     header('Cache-Control: private, max-age=0, must-revalidate');
     header('Pragma: public');
     echo $pdfBinario;
@@ -51,46 +63,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form action="" method="POST">
         <div class="form-group">
             <label for="motorista">Motorista: </label>
-            <input type="text" name="motorista" id="motorista" required>
+            <input type="text" name="motorista" id="motorista" value="<?=$nome?>" >
         </div>
         <div class="form-group">
             <label for="cpf">CPF: </label>
-            <input type="text" name="cpf" id="cpf" required>
+            <input type="text" name="cpf" id="cpf" value="<?php echo $cpf_value?>" 
+            >
         </div>
         
         <div class="form-group">
             <label for="cidade">Cidade: </label>
-            <input type="text" name="cidade" id="cidade" required>
+            <input type="text" name="cidade" id="cidade" >
         </div>
 
         <div class="form-group">
             <label for="veiculo">Veiculo: </label>
-            <input type="text" name="veiculo" id="veiculo" required>
+            <input type="text" name="veiculo" id="veiculo" >
         </div>
 
         <div class="form-group">
             <label for="data_i">Data inicial: </label>
-            <input type="date" name="data_i" id="data_i" required>
+            <input type="date" name="data_i" id="data_i" >
         </div>
         
         <div class="form-group">
             <label for="data_f">Data final: </label>
-            <input type="date" name="data_f" id="data_f" required>
+            <input type="date" name="data_f" id="data_f" >
         </div>
 
         <div class="form-group">
             <label for="historico">Historico </label>
-            <textarea type="text" rows='3' name="historico" id="historico" required ></textarea>
+            <textarea type="text" rows='3' name="historico" id="historico"  ></textarea>
         </div>
 
         <div class="form-group">
             <label for="saida">Saída: </label>
-            <input type="text" name="saida" id="saida" required>
+            <input type="text" name="saida" id="saida" >
         </div>
 
         <div class="form-group">
             <label for="chegada">Chegada: </label>
-            <input type="text" name="chegada" id="chegada" required>
+            <input type="text" name="chegada" id="chegada" >
         </div>
         
     
