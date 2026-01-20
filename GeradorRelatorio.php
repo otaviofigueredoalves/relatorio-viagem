@@ -20,75 +20,78 @@ class GeradorRelatorio {
         ?>
         <style>
             #cidade {
-                top: 87.5mm;
-                left: 73mm;
+                top: 91.2mm;
+                left: 69mm;
                 background-color: #fff;
                 width: 47mm
             }
 
             #data_i {
                 text-align: center;
-                top: 92mm;
-                left: 35mm;
-                background-color: #fff;
-                width: 27mm;
-                font-size: 15px;
+                top: 91.5mm;
+                left: 134.5mm;
+                background-color: transparent;
+                width: 24.5mm;
+                font-size: 14px;
             }
 
             #data_f {
                 text-align: center;
-                top: 92mm;
-                left: 65.5mm;
-                background-color: #fff;
-                width: 27mm;
-                font-size: 15px;
+                top: 91.5mm;
+                left: 158.3mm !important;
+                background-color: transparent;
+                width: 24.5mm;
+                font-size: 14px;
             }
 
             #historico {
-                top: 130mm;
+                top: 154mm;
                 left: 28.5mm;
                 width: 148mm;
-                line-height: 5.8mm;
+                line-height: 5.7mm;
                 word-wrap: break-word;
             }
 
             #motorista {
-                top: 68mm;
-                left: 97mm;
-            
+                top: 68.7mm;
+                left: 111mm;
             }
-            #nome_motorista{
-                top: 202mm;
+
+            #nome_motorista {
+                top: 225.5mm;
                 left: 50mm;
             }
+
             #cpf {
-                top: 73mm;
-                left: 30mm;
+                top: 74.5mm !important;
+                left: 65mm !important;
+                background: transparent !important;
+                width: 35mm !important;
             }
 
             #veiculo {
-                top: 210mm;
-                left: 58mm;
+                top: 233mm;
+                left: 59mm;
             }
 
             #saida {
-                top: 217mm;
+                top: 240.1mm;
                 left: 43mm;
             }
 
             #chegada {
-                top: 224.5mm;
-                left: 49mm;
+                top: 247.5mm;
+                left: 50mm;
             }
 
-            <?php 
-            $caminhoExtra = $_SERVER['DOCUMENT_ROOT'] . '/src/css/extra.css';
+            
+            /* $caminhoExtra = $_SERVER['DOCUMENT_ROOT'] . '/src/css/extra.css';
 
             if(!empty($dados['extra']) && file_exists($caminhoExtra)){
                 echo file_get_contents($caminhoExtra);
-            }
+            } */
 
-            ?>
+            
             @page { margin: 0; }
             body {
                 margin: 0;
@@ -110,7 +113,7 @@ class GeradorRelatorio {
             .campo {
                 position: absolute;
                 color: #000;
-                font-size: 14px;
+                font-size: 15px;
                 font-weight: bold;
                 /* border: 1px solid red; */
             }
@@ -131,14 +134,14 @@ class GeradorRelatorio {
      
         <img src="<?php
         if(!empty($dados['extra'])){
-            echo realpath(__DIR__ . '/template/RELATORIO-VIAGEM-EXTRA.jpg'); 
+            echo realpath(__DIR__ . '/template/relatorio-viagem-extra.jpg'); 
         } else {
-            echo realpath(__DIR__ . '/template/RELATORIO-VIAGEM.jpg'); 
+            echo realpath(__DIR__ . '/template/relatorio-viagem.jpg'); 
         }
 
         ?>" class="background">
 
-        <div id="cidade" class="campo"><?php echo $dados['cidade'] . '-CE'; ?></div>
+        <div id="cidade" class="campo"><?php echo $dados['cidade'] . ' - CE'; ?></div>
         <div id="data_i" class="campo"><?php echo date('d/m/Y', strtotime($dados['data_i'])) ; ?></div>
         <div id="data_f" class="campo"><?php echo date('d/m/Y', strtotime($dados['data_f'])); ?></div>
         <div id="historico" class="campo"><?php echo nl2br(htmlspecialchars($dados['historico'])); ?></div>
