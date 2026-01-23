@@ -146,7 +146,7 @@ class GeradorRelatorio {
         <div id="data_f" class="campo"><?php echo date('d/m/Y', strtotime($dados['data_f'])); ?></div>
         <div id="historico" class="campo"><?php echo nl2br(htmlspecialchars($dados['historico'])); ?></div>
         <div id="motorista" class="campo"><?php echo ucwords($dados['motorista']); ?></div>
-        <div id="nome_motorista" class="campo"><?php echo ucwords($dados['motorista']); ?></div>
+        <!-- <div id="nome_motorista" class="campo"><?php echo ucwords($dados['motorista']); ?></div> -->
         <div id="cpf" class="campo"><?php 
 
         echo $dados['cpf'][0] .  $dados['cpf'][1] .  $dados['cpf'][2] . '.' .  $dados['cpf'][3] .  $dados['cpf'][4] .  $dados['cpf'][5] . '.' .  $dados['cpf'][6] .  $dados['cpf'][7] .  $dados['cpf'][8] . '-' .  $dados['cpf'][9] .  $dados['cpf'][10]; 
